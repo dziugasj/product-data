@@ -25,4 +25,10 @@ class ProductCache {
             logger.warn("Product will be not added to cache since it has NULL name [product=$product]")
         }
     }
+
+    fun getProducts(): List<Product> {
+        return map.entries
+            .map { entry -> entry.value }
+            .toList()
+    }
 }
