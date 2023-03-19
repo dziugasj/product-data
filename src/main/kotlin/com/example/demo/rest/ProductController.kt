@@ -10,7 +10,7 @@ class ProductController(
     val productCache: ProductCache
 ) {
 
-    @PutMapping("/product")
+    @PutMapping("/products")
     fun updateProductStockLevel(
         @RequestParam name: String,
         @RequestParam stockLevel: Long
@@ -18,12 +18,12 @@ class ProductController(
         return productCache.updateProductStockLevel(name, stockLevel)
     }
 
-    @GetMapping("/product")
+    @GetMapping("/products/byName")
     fun getProductByName(@RequestParam name: String): Product {
         return productCache.getProductByName(name)
     }
 
-    @GetMapping("/products")
+    @GetMapping("/products/byCategory")
     fun getProductsByCategoryAndInStock(
         @RequestParam category: String,
         @RequestParam(required = false) inStock: Boolean?
@@ -31,10 +31,10 @@ class ProductController(
         return productCache.getProductsByCategoryAndInStock(category, inStock)
     }
 
+    // TODO
+
     @GetMapping("/all-products")
     fun getProducts(): List<Product> {
         return productCache.getProducts()
     }
-
-
 }

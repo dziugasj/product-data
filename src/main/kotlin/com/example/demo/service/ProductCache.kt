@@ -15,8 +15,14 @@ class ProductCache {
         val logger = LoggerFactory.getLogger(ProductCache::class.java)!!
     }
 
+    fun clear() {
+        map.clear()
+    }
+
     fun saveProducts(products: List<Product>) {
+        logger.info("Starting saving products [count=${products.size}]")
         products.forEach { p -> map[p.name] = p }
+        logger.info("Finished saving products")
     }
 
     fun getProducts(): List<Product> {
