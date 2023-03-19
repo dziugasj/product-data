@@ -1,6 +1,7 @@
 package com.example.demo.client
 
 import com.example.demo.dto.Product
+import com.example.demo.service.ProductCache
 import org.slf4j.LoggerFactory
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.core.ParameterizedTypeReference
@@ -11,6 +12,7 @@ import javax.annotation.PostConstruct
 
 @Service
 class ProductClient(
+    val productCache: ProductCache,
     restTemplateBuilder: RestTemplateBuilder
 ) {
 
@@ -21,19 +23,20 @@ class ProductClient(
     }
 
     @PostConstruct
-    fun getProducts() {
+    fun fetchProductsAndSaveInCache() {
+        productCache.saveProducts(fetchProducts())
+    }
 
-
-        val response =
+    private fun fetchProducts(): List<Product> {
+        return try {
             restTemplate.exchange(
                 RequestEntity.get("http://localhost:4001/productdata").build(),
                 typeRef<List<Product>>()
-            )
-
-
-        logger.info("Here")
-
-
+            ).body!!
+        } catch (exception: RuntimeException) {
+            logger.error("Failed to fetch product data. Intentionally failing startup of the application")
+            throw exception
+        }
     }
 
     private inline fun <reified T : Any> typeRef(): ParameterizedTypeReference<T> =
