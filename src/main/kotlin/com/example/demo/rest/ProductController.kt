@@ -18,7 +18,7 @@ class ProductController(
         return productCache.getProductByName(name)
     }
 
-    @GetMapping("/productsxxx")
+    @GetMapping("/products")
     fun getProductsByCategoryAndInStock(
         @RequestParam category: String,
         @RequestParam(required = false) inStock: Boolean?
@@ -26,7 +26,7 @@ class ProductController(
         return productCache.getProductsByCategoryAndInStock(category, inStock)
     }
 
-    @GetMapping("/products")
+    @GetMapping("/all-products")
     fun getProducts(): List<Product> {
         return productCache.getProducts()
     }
