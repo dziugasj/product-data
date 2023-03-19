@@ -1,6 +1,6 @@
 package com.example.demo.client
 
-import com.example.demo.dto.Product
+import com.example.demo.client.dto.ProductData
 import org.slf4j.LoggerFactory
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.core.ParameterizedTypeReference
@@ -19,17 +19,17 @@ class ProductClient(
         val logger = LoggerFactory.getLogger(ProductClient::class.java)!!
     }
 
-    fun fetchProducts(): List<Product> {
+    fun fetchProducts(): List<ProductData> {
         return try {
             logger.info("Starting Products fetch")
 
-            val products = restTemplate.exchange(
+            val productData = restTemplate.exchange(
                 RequestEntity.get("http://localhost:4001/productdata").build(),
-                typeRef<List<Product>>()
+                typeRef<List<ProductData>>()
             ).body!!
 
-            logger.info("Finished Products fetch [found=${products.size}]")
-            products
+            logger.info("Finished Products fetch [found=${productData.size}]")
+            productData
         } catch (exception: RuntimeException) {
             logger.error("Failed to fetch product data")
             throw exception

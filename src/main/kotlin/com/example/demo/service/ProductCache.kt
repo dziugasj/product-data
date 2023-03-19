@@ -1,5 +1,6 @@
 package com.example.demo.service
 
+import com.example.demo.client.dto.ProductData
 import com.example.demo.dto.Product
 import com.example.demo.exception.ProductNotFoundException
 import org.slf4j.LoggerFactory
@@ -15,15 +16,15 @@ class ProductCache {
         val logger = LoggerFactory.getLogger(ProductCache::class.java)!!
     }
 
-    fun saveProducts(products: List<Product>) {
-        products.forEach(::addProductIfPossible)
+    fun saveProducts(productData: List<Product>) {
+        productData.forEach(::addProductIfPossible)
     }
 
-    private fun addProductIfPossible(product: Product) {
-        if (product.name != null) {
-            map[product.name] = product
+    private fun addProductIfPossible(productData: Product) {
+        if (productData.name != null) {
+            map[productData.name] = productData
         } else {
-            logger.warn("Product will be not added to cache since it has NULL name [product=$product]")
+            logger.warn("Product will be not added to cache since it has NULL name [product=$productData]")
         }
     }
 
