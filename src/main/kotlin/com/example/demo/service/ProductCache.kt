@@ -41,4 +41,17 @@ class ProductCache {
     private fun Product.filterByCategoryAndInStock(category: String, inStock: Boolean?): Boolean {
         return this.category == category && (inStock == null || if (inStock) this.stockLevel > 0L else this.stockLevel == 0L)
     }
+
+    fun updateProductStockLevel(name: String, newStockLevel: Long) {
+        map.compute(name) { _, p ->
+            updateStockLevelOrThrow(p, name, newStockLevel)
+        }
+    }
+
+    private fun updateStockLevelOrThrow(product: Product?, name: String, newStockLevel: Long): Product {
+        if (product == null)
+            throw ProductNotFoundException("Product not found by name '$name'")
+
+        return product.copy(stockLevel = newStockLevel)
+    }
 }
