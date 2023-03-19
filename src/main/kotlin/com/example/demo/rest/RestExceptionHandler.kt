@@ -3,6 +3,7 @@ package com.example.demo.rest
 import com.example.demo.exception.ProductNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 
@@ -13,6 +14,12 @@ class RestExceptionHandler {
     fun handleProductNotFoundException(exception: ProductNotFoundException): ResponseEntity<String> {
         exception.printStackTrace()
         return ResponseEntity("", HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException::class)
+    fun handleMissingServletRequestParameterException(exception: MissingServletRequestParameterException): ResponseEntity<String> {
+        exception.printStackTrace()
+        return ResponseEntity("", HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(RuntimeException::class)
