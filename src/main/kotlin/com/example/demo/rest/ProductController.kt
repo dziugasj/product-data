@@ -30,11 +30,4 @@ class ProductController(
     ): List<Product> {
         return productCache.getProductsByCategoryAndInStock(category, inStock)
     }
-
-    // TODO
-
-    @GetMapping("/all-products")
-    fun getProducts(): List<Product> {
-        return productCache.getProducts()
-    }
 }

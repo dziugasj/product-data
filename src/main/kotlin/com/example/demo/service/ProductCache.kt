@@ -25,10 +25,6 @@ class ProductCache {
         logger.info("Finished saving products")
     }
 
-    fun getProducts(): List<Product> {
-        return map.values.toList()
-    }
-
     fun getProductByName(name: String): Product {
         return map[name] ?: throw ProductNotFoundException("Product not found by name '$name'")
     }
