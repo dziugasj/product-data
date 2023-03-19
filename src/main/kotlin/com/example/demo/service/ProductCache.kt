@@ -1,6 +1,7 @@
 package com.example.demo.service
 
 import com.example.demo.dto.Product
+import com.example.demo.exception.ProductNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.util.concurrent.ConcurrentHashMap
@@ -30,5 +31,9 @@ class ProductCache {
         return map.entries
             .map { entry -> entry.value }
             .toList()
+    }
+
+    fun getProduct(name: String): Product {
+        return map[name] ?: throw ProductNotFoundException("Product not found by name '$name'")
     }
 }
