@@ -28,12 +28,21 @@ class ProductCache {
     }
 
     fun getProducts(): List<Product> {
-        return map.entries
-            .map { entry -> entry.value }
-            .toList()
+        return map.values.toList()
     }
 
-    fun getProduct(name: String): Product {
+    fun getProductByName(name: String): Product {
         return map[name] ?: throw ProductNotFoundException("Product not found by name '$name'")
+    }
+
+    fun getProductsByCategoryAndInStock(category: String, inStock: Boolean?): List<Product> {
+        logger.info("Starting search by [category=$category inStock=$inStock]")
+
+        val productsFound = map.values
+            .filter { product -> product.category == category }
+            .toList()
+
+        logger.info("Finished search by [category=$category inStock=$inStock found=${productsFound.size}]")
+        return productsFound
     }
 }
