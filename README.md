@@ -17,6 +17,7 @@ Complete remaining integration tests
 Complete missing endpoint: 4. Exposes a REST endpoint to allow for updating of any of the fields of a single product
 Fix issue with @PostConstruct and integration tests
 Endpoint namings can be improved: /products/byName and /products/byCategory
+URL can be moved to application.properties
 
 # Rest endpoints
 
