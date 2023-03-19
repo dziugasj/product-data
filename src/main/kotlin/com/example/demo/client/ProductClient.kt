@@ -31,7 +31,7 @@ class ProductClient(
             logger.info("Finished Products fetch [found=${products.size}]")
             products
         } catch (exception: RuntimeException) {
-            logger.error("Failed to fetch product data. Intentionally failing startup of the application")
+            logger.error("Failed to fetch product data")
             throw exception
         }
     }
